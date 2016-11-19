@@ -5,12 +5,12 @@ import java.awt.*;
 import java.io.File;
 
 /**
- * GUIUtil
+ * 面板工具
  * Created by LuoSw on 2016/10/27 0027.
  */
 public class GUIUtil {
 
-    private static String imageFolder = "E:\\Idea\\hutubill\\img";
+    private static String imageFolder = "E:\\Git\\hutubill\\hutubill\\img";
 
     // 给按钮设置图标和文本以及提示文字
     public static void setImageIcon(JButton b, String fileName, String tip) {
@@ -100,7 +100,6 @@ public class GUIUtil {
         try {
             javax.swing.UIManager.setLookAndFeel("com.birosoft.liquid.LiquidLookAndFeel");
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }

@@ -10,7 +10,9 @@ import java.awt.*;
 public class CenterPanel extends JPanel {
 
     private double rate; // 拉伸比例
+
     private JComponent c; // 显示的组件
+
     private boolean strech; // 是否拉伸
 
     public CenterPanel(double rate, boolean strech) {
