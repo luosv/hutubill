@@ -10,7 +10,7 @@ import java.io.File;
  */
 public class GUIUtil {
 
-    private static String imageFolder = "E:\\Git\\hutubill\\hutubill\\img";
+    private static String imageFolder = "/Users/luosv/Documents/GitHub/hutubill/hutubill/img";
 
     // 给按钮设置图标和文本以及提示文字
     public static void setImageIcon(JButton b, String fileName, String tip) {
