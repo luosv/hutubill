@@ -1,5 +1,7 @@
 package util;
 
+import gui.panel.WorkingPanel;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -29,12 +31,13 @@ public class CenterPanel extends JPanel {
         if (null != c) {
             Dimension containerSize = this.getSize();
             Dimension componentSize = c.getPreferredSize();
+
             if (strech) {
                 c.setSize((int) (containerSize.width * rate), (int) (containerSize.height * rate));
             } else {
                 c.setSize(componentSize);
             }
-            c.setLocation(componentSize.width / 2 - c.getSize().width / 2, componentSize.height / 2 - c.getSize().height / 2);
+            c.setLocation(containerSize.width / 2 - c.getSize().width / 2, containerSize.height / 2 - c.getSize().height / 2);
         }
         super.repaint();
     }
@@ -46,6 +49,9 @@ public class CenterPanel extends JPanel {
             remove(c);
         }
         add(p);
+        if (p instanceof WorkingPanel) {
+            ((WorkingPanel) p).updateData();
+        }
         this.updateUI();
     }
 
@@ -56,7 +62,7 @@ public class CenterPanel extends JPanel {
         f.setLocationRelativeTo(null);
         CenterPanel cp = new CenterPanel(0.85, true);
         f.setContentPane(cp);
-        f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setVisible(true);
         JButton b = new JButton("abc");
         cp.show(b);

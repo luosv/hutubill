@@ -10,10 +10,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * 测试类
+ * 测试环形进度条
  * Created by LuoSw on 2016/10/27 0027.
  */
-public class Test {
+public class Test2 {
 
     public static void main(String[] args) {
 
