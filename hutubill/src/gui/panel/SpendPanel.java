@@ -1,12 +1,18 @@
 package gui.panel;
 
+import util.CircleProgressBar;
+import util.ColorUtil;
+
 import javax.swing.*;
+import java.awt.*;
+
+import static util.GUIUtil.setColor;
 
 /**
  * 消费一览
  * Created by LuoSw on 2016/10/26 0026.
  */
-public class SpendPanel {
+public class SpendPanel extends WorkingPanel {
 
     public static SpendPanel instance = new SpendPanel();
 
@@ -20,12 +26,72 @@ public class SpendPanel {
     JLabel vMonthSpend = new JLabel("$2300");
     JLabel vTodaySpend = new JLabel("$25");
     JLabel vAvgSpendPerDay = new JLabel("$120");
-    JLabel vMonthLeft = new JLabel("$2048");
+    JLabel vMonthAvailable = new JLabel("$2048");
     JLabel vDayAvgAvailable = new JLabel("$389");
     JLabel vMonthLeftDay = new JLabel("15天");
 
-    private SpendPanel() {
+    CircleProgressBar bar;
+
+    public SpendPanel() {
+        this.setLayout(new BorderLayout());
+        bar = new CircleProgressBar();
+        bar.setBackgroundColor(ColorUtil.blueColor);
+
+        setColor(ColorUtil.grayColor, lMonthSpend, lTodaySpend, lAvgSpendPerDay, lMonthLeft,
+                lDayAvgAvailable, lMonthLeftDay, vAvgSpendPerDay, vMonthAvailable, vDayAvgAvailable,
+                vMonthLeftDay);
+        setColor(ColorUtil.blueColor, vMonthSpend, vTodaySpend);
+
+        vMonthSpend.setFont(new Font("微软雅黑", Font.BOLD, 23));
+        vTodaySpend.setFont(new Font("微软雅黑", Font.BOLD, 23));
+
+        this.add(center(), BorderLayout.CENTER);
+        this.add(south(), BorderLayout.SOUTH);
+    }
+
+    private JPanel center() {
+        JPanel p = new JPanel();
+        p.setLayout(new BorderLayout());
+        p.add(west(), BorderLayout.WEST);
+        p.add(east());
+        return p;
+    }
+
+    private Component east() {
+        return bar;
+    }
+
+    private Component west() {
+        JPanel p = new JPanel();
+        p.setLayout(new GridLayout(4, 1));
+        p.add(lMonthSpend);
+        p.add(vMonthSpend);
+        p.add(lTodaySpend);
+        p.add(vTodaySpend);
+        return p;
+    }
+
+    private JPanel south() {
+        JPanel p = new JPanel();
+        p.setLayout(new GridLayout(2, 4));
+        p.add(lAvgSpendPerDay);
+        p.add(lMonthLeft);
+        p.add(lDayAvgAvailable);
+        p.add(lMonthLeftDay);
+        p.add(vAvgSpendPerDay);
+        p.add(vMonthAvailable);
+        p.add(vDayAvgAvailable);
+        p.add(vMonthLeftDay);
+        return p;
+    }
+
+    @Override
+    public void updateData() {
 
     }
 
+    @Override
+    public void addListener() {
+
+    }
 }
