@@ -5,8 +5,8 @@ import util.DBUtil;
 import util.DateUtil;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.Date;
+import java.util.*;
 
 /**
  * RecordDAO
@@ -103,18 +103,18 @@ public class RecordDAO {
         return record;
     }
 
-    public List<Record> list(int i, short maxValue) {
+    public List<Record> list(java.util.Date today) {
         return list(0, Short.MAX_VALUE);
     }
 
     public List<Record> list(int start, int count) {
-        List<Record> records = new ArrayList<Record>();
+        List<Record> records = new ArrayList<>();
 
-        String sql = "select * from record order by id desc limit ?,? ";
+        String sql = "select * from record order by id desc limit ?, ?";
 
         try (Connection c = DBUtil.getConnection(); PreparedStatement ps = c.prepareStatement(sql)) {
-            ps.setInt(1, start);
-            ps.setInt(2, count);
+            ps.setInt(start, 1);
+            ps.setInt(count, 2);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Record record = new Record();
@@ -123,11 +123,11 @@ public class RecordDAO {
                 int cid = rs.getInt("cid");
                 String comment = rs.getString("comment");
                 Date date = rs.getDate("date");
+                record.id = id;
                 record.spend = spend;
                 record.cid = cid;
                 record.comment = comment;
                 record.date = date;
-                record.id = id;
                 records.add(record);
             }
         } catch (SQLException e) {
@@ -137,7 +137,7 @@ public class RecordDAO {
     }
 
     public List<Record> list(int cid) {
-        List<Record> records = new ArrayList<Record>();
+        List<Record> records = new ArrayList<>();
 
         String sql = "select * from record where cid = ?";
 
@@ -150,11 +150,11 @@ public class RecordDAO {
                 int spend = rs.getInt("spend");
                 String comment = rs.getString("comment");
                 Date date = rs.getDate("date");
+                record.id = id;
                 record.spend = spend;
                 record.cid = cid;
                 record.comment = comment;
                 record.date = date;
-                record.id = id;
                 records.add(record);
             }
         } catch (SQLException e) {
@@ -164,68 +164,20 @@ public class RecordDAO {
     }
 
     public List<Record> listToday() {
-        return list((Date) DateUtil.today());
+        return list(DateUtil.today());
     }
 
     public List<Record> list(Date day) {
-        List<Record> records = new ArrayList<Record>();
+        List<Record> records = new ArrayList<>();
 
-        String sql = "select * from record where date =?";
+        String sql = "select * from record where date = ?";
 
-        try (Connection c = DBUtil.getConnection(); PreparedStatement ps = c.prepareStatement(sql)) {
-            ps.setDate(1, DateUtil.util2sql(day));
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                Record record = new Record();
-                int id = rs.getInt("id");
-                int cid = rs.getInt("cid");
-                int spend = rs.getInt("spend");
-                String comment = rs.getString("comment");
-                Date date = rs.getDate("date");
-                record.spend = spend;
-                record.cid = cid;
-                record.comment = comment;
-                record.date = date;
-                record.id = id;
-                records.add(record);
-            }
+        try (Connection c = DBUtil.getConnection(); PreparedStatement ps = c.prepareStatement(sql)){
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return records;
-    }
-
-    public List<Record> listThisMonth() {
-        return list(DateUtil.monthBegin(), DateUtil.monthEnd());
-    }
-
-    public List<Record> list(Date start, Date end) {
-        List<Record> records = new ArrayList<Record>();
-
-        String sql = "select * from record where date >=? and date <= ?";
-
-        try (Connection c = DBUtil.getConnection(); PreparedStatement ps = c.prepareStatement(sql)) {
-            ps.setDate(1, DateUtil.util2sql(start));
-            ps.setDate(2, DateUtil.util2sql(end));
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                Record record = new Record();
-                int id = rs.getInt("id");
-                int cid = rs.getInt("cid");
-                int spend = rs.getInt("spend");
-                String comment = rs.getString("comment");
-                Date date = rs.getDate("date");
-                record.spend = spend;
-                record.cid = cid;
-                record.comment = comment;
-                record.date = date;
-                record.id = id;
-                records.add(record);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return records;
+        return null;
     }
 
 }
