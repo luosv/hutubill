@@ -172,8 +172,9 @@ public class RecordDAO {
 
         String sql = "select * from record where date = ?";
 
-        try (Connection c = DBUtil.getConnection(); PreparedStatement ps = c.prepareStatement(sql)){
-
+        try (Connection c = DBUtil.getConnection(); PreparedStatement ps = c.prepareStatement(sql)) {
+            // ps.setDate(1, DateUtil.util2sql(day));
+            // 日了狗了eclipse里正常，idea里就不对了，艹...
         } catch (SQLException e) {
             e.printStackTrace();
         }
