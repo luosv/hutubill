@@ -103,7 +103,7 @@ public class RecordDAO {
         return record;
     }
 
-    public List<Record> list(java.util.Date today) {
+    public List<Record> list(java.util.Date date, java.util.Date today) {
         return list(0, Short.MAX_VALUE);
     }
 
@@ -164,7 +164,7 @@ public class RecordDAO {
     }
 
     public List<Record> listToday() {
-        return list(DateUtil.today());
+        return list((Date) DateUtil.today());
     }
 
     public List<Record> list(Date day) {
@@ -173,12 +173,63 @@ public class RecordDAO {
         String sql = "select * from record where date = ?";
 
         try (Connection c = DBUtil.getConnection(); PreparedStatement ps = c.prepareStatement(sql)) {
-            // ps.setDate(1, DateUtil.util2sql(day));
+            //noinspection JpaQueryApiInspection
+            ps.setDate(1, DateUtil.util2sql(day));
             // 日了狗了eclipse里正常，idea里就不对了，艹...
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Record record = new Record();
+                int id = rs.getInt("id");
+                int cid = rs.getInt("cid");
+                int spend = rs.getInt("spend");
+                String comment = rs.getString("comment");
+                Date date = rs.getDate("date");
+                record.id = id;
+                record.cid = cid;
+                record.spend = spend;
+                record.comment = comment;
+                record.date = date;
+                records.add(record);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return records;
+    }
+
+    public List<Record> listThisMonth() {
+        return list(DateUtil.monthBegin(), DateUtil.monthEnd());
+    }
+
+    public List<Record> list(Date start, Date end) {
+        List<Record> records = new ArrayList<>();
+
+        String sql = "select * from record where date >=? and date <= ?";
+
+        try (Connection c = DBUtil.getConnection(); PreparedStatement ps = c.prepareStatement(sql)) {
+            //noinspection JpaQueryApiInspection
+            ps.setDate(1, DateUtil.util2sql(start));
+            //noinspection JpaQueryApiInspection
+            ps.setDate(1, DateUtil.util2sql(end));
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Record record = new Record();
+                int id = rs.getInt("id");
+                int cid = rs.getInt("cid");
+                int spend = rs.getInt("spend");
+                String comment = rs.getString("comment");
+                Date date = rs.getDate("date");
+                record.id = id;
+                record.cid = cid;
+                record.spend = spend;
+                record.comment = comment;
+                record.date = date;
+                records.add(record);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return records;
     }
 
 }
