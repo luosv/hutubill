@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 
 /**
  * 原型设计
- * Created by LuoSw on 2016/10/26 0026.
+ * Created by Luosv on 2016/10/26 0026.
  */
 public class HutuMainFrame {
 

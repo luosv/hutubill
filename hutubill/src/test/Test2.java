@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 
 /**
  * 测试环形进度条
- * Created by LuoSw on 2016/10/27 0027.
+ * Created by Luosv on 2016/10/27 0027.
  */
 public class Test2 {
 

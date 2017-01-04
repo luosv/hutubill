@@ -13,7 +13,7 @@ import static util.GUIUtil.showPanel;
 
 /**
  * 消费一览
- * Created by LuoSw on 2016/10/26 0026.
+ * Created by Luosv on 2016/10/26 0026.
  */
 public class SpendPanel extends WorkingPanel {
 
